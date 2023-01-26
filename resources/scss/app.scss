@@ -1,0 +1,67 @@
+@import '~bootstrap/scss/bootstrap';
+
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header{
+    height: 80px;
+    margin-bottom: 0;
+}
+
+aside.my-aside{
+    height: calc(100vh - 80px);
+    padding-top: 3rem;
+    .my-li-item.active{
+        position: relative;
+        &:hover a{
+            color: rgb(201, 201, 201);
+        }
+        &:hover::before{
+            border-color: rgb(201, 201, 201);
+        }
+        &::before{
+            content: '';
+            display: inline-block;
+            height: 1rem;
+            width: 1rem;
+            border-bottom: 1px solid white;
+            border-left: 1px solid white;
+            position: absolute;
+            bottom: 0.6rem;
+        }
+    }
+    nav{
+        ul{
+            li{
+
+                a{
+                    text-decoration: none;
+                    color: white;
+                    font-size: 0.9rem;
+
+                }
+            }
+            }
+    }
+}
+
+
+.my-container{
+    height: calc(100vh - 80px);
+    overflow: auto;
+}
+
+.my-show-container{
+    img{
+        width: 50%;
+    }
+}
+
+img.my-minature{
+    display: inline-block;
+    width: 150px;
+    margin-top: .5rem;
+
+}
+
