@@ -10,8 +10,14 @@ class PageController extends Controller
 {
     public function index(){
 
-        $projects = Project::paginate(6);
+        $projects = Project::with(['type', 'tecnologies'])->paginate(6);
 
         return response()->json(compact('projects'));
+    }
+
+    public function show($slug){
+        $project = Project::where('slug', $slug)->with(['type', 'tecnologies'])->first();
+
+        return response()->json($project);
     }
 }
