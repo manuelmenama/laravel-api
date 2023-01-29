@@ -40,6 +40,7 @@
 
                         <a class="dropdown-item text-light" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
+                            {{Auth::user()->name}}
                             {{ __('Logout') }}
                         </a>
 
