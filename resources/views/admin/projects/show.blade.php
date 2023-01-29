@@ -31,7 +31,7 @@
         </ul>
         @if ($project->cover_image)
             <div>
-                <img src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->image_original_name }}">
+                <img src="{{ asset('storage/uploads' . $project->cover_image) }}" alt="{{ $project->image_original_name }}">
             </div>
             <small><i>{{ $project->image_original_name }}</i></small>
         @endif

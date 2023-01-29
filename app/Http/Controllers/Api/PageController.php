@@ -18,6 +18,13 @@ class PageController extends Controller
     public function show($slug){
         $project = Project::where('slug', $slug)->with(['type', 'tecnologies'])->first();
 
+        if($project->image){
+            $project->image = url('storage/uploads/'.$project->cover_image);
+        }else{
+            $project->image = url('storage/uploads/placeholder.webp');
+
+        }
+
         return response()->json($project);
     }
 }
