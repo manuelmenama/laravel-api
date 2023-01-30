@@ -27,4 +27,12 @@ class PageController extends Controller
 
         return response()->json($project);
     }
+
+    public function search() {
+        $searched = $_GET['searched'];
+
+        $searched_project = Project::where('name', 'like', "%$searched%")->with(['type', 'tecnologies', 'user'])->get();
+
+        return response()->json(compact('searched_project'));
+    }
 }
