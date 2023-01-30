@@ -11,11 +11,16 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'client_name', 'cover_image', 'summary', 'image_original_name', 'type_id'];
+    protected $fillable = ['name', 'slug', 'client_name', 'cover_image', 'summary', 'image_original_name', 'type_id', 'user_id'];
 
     public function type(){
 
         return $this->belongsTo(Type::class);
+    }
+
+    public function user(){
+
+        return $this->belongsTo(User::class);
     }
 
     public function tecnologies(){

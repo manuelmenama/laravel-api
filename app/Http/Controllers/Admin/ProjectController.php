@@ -7,6 +7,7 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use App\Models\Tecnology;
 use App\Models\Type;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Psy\CodeCleaner\ReturnTypePass;
 
@@ -21,9 +22,11 @@ class ProjectController extends Controller
     {
         if(isset($_GET['search'])){
             $searched = $_GET['search'];
-            $projects = Project::where('name','like',"%$searched%")->paginate(10);
+            $projects = Project::where('user_id', Auth::id())
+                ->where('name','like',"%$searched%")
+                ->paginate(10);
         }else{
-            $projects = Project::orderBy('id', 'desc')->paginate(10);
+            $projects = Project::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
         }
 
         $direction = 'desc';
@@ -74,6 +77,8 @@ class ProjectController extends Controller
 
         //dd($project_data);
 
+        $project_data['user_id'] = Auth::id();
+
         $new_project = new Project();
         $new_project->fill($project_data);
         $new_project->save();
@@ -94,7 +99,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show', compact('project'));
+        if($project->user_id === Auth::id()){
+            return view('admin.projects.show', compact('project'));
+        }
+        return redirect()->route('admin.project.index');
     }
 
     /**
@@ -105,6 +113,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        if($project->user_id != Auth::id()){
+            return redirect()->route('admin.project.index');
+        }
         $types = Type::all();
         $tecnologies = Tecnology::all();
         return view('admin.projects.edit', compact('project', 'types', 'tecnologies'));

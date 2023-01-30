@@ -10,13 +10,13 @@ class PageController extends Controller
 {
     public function index(){
 
-        $projects = Project::with(['type', 'tecnologies'])->paginate(6);
+        $projects = Project::with(['type', 'tecnologies', 'user'])->paginate(6);
 
         return response()->json(compact('projects'));
     }
 
     public function show($slug){
-        $project = Project::where('slug', $slug)->with(['type', 'tecnologies'])->first();
+        $project = Project::where('slug', $slug)->with(['type', 'tecnologies', 'user'])->first();
 
         if($project->cover_image){
             $project->cover_image = url('storage/'.$project->cover_image);
