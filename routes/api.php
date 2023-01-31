@@ -25,5 +25,6 @@ Route::namespace('Api')
         Route::get('/', [PageController::class, 'index']);
         Route::get('/search', [PageController::class, 'search']);
         Route::get('/project-type/{id}', [PageController::class, 'getByType']);
+        Route::get('/project-tecnology/{id}', [PageController::class, 'getByTecnology']);
         Route::get('/{slug}', [PageController::class, 'show']);
     });
