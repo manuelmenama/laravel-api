@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -12,7 +13,9 @@ class PageController extends Controller
 
         $projects = Project::with(['type', 'tecnologies', 'user'])->paginate(6);
 
-        return response()->json(compact('projects'));
+        $types = Type::all();
+
+        return response()->json(compact('projects', 'types'));
     }
 
     public function show($slug){
@@ -35,4 +38,20 @@ class PageController extends Controller
 
         return response()->json(compact('searched_project'));
     }
+
+    public function getByType($id){
+        $projects = Project::where('type_id', $id)->with(['type', 'tecnologies', 'user'])->get();
+
+        return response()->json(compact('projects'));
+    }
 }
+//funzione per cercare i post con tag
+/*
+$posts = Post::with(['tags','category','user'])
+            ->whereHas('tags', function (Builder $query) use($id){
+
+                $query->where('tag_id', $id);
+
+            })
+            ->get();
+*/
