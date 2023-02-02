@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewContact;
 use App\Models\Lead;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class LeadController extends Controller
@@ -18,7 +20,7 @@ class LeadController extends Controller
         $validator = Validator::make($data,
             [
 
-                "object" => "required|min:3|max:255",
+                "name" => "required|min:3|max:255",
                 "email" => "required|email|max:255",
                 "subject" => "required|min:5",
 
@@ -41,8 +43,9 @@ class LeadController extends Controller
         $new_lead->save();
 
         //inviare email
+        Mail::to('manuel@info.com')->send(new NewContact($new_lead));
 
 
-        return response()->json($data);
+        return response()->json(compact('success'));
     }
 }

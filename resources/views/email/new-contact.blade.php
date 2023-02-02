@@ -3,7 +3,7 @@
 <p>
     Dati <br>
     Oggetto: {{$lead->object}}
-    Da: {{$lead->email}}
+    Da: {{$lead->email}} <br>
     Contenuto: <br>
     {{$lead->subject}}
 
