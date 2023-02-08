@@ -37,13 +37,13 @@ class PageController extends Controller
     public function search() {
         $searched = $_GET['searched'];
 
-        $searched_project = Project::where('name', 'like', "%$searched%")->with(['type', 'tecnologies', 'user'])->paginate(6)->withQueryString();
+        $projects = Project::where('name', 'like', "%$searched%")->with(['type', 'tecnologies', 'user'])->paginate(6)->withQueryString();
 
-        return response()->json(compact('searched_project'));
+        return response()->json(compact('projects'));
     }
 
     public function getByType($id){
-        $projects = Project::where('type_id', $id)->with(['type', 'tecnologies', 'user'])->get();
+        $projects = Project::where('type_id', $id)->with(['type', 'tecnologies', 'user'])->paginate(6);
 
         return response()->json(compact('projects'));
     }
@@ -55,7 +55,7 @@ class PageController extends Controller
                 $query->where('tecnology_id', $id);
 
             })
-            ->get();
+            ->paginate(6);
 
         return response()->json(compact('projects'));
     }
